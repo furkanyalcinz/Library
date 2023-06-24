@@ -15,7 +15,7 @@ namespace DataAccess
             get
             {
                 ConfigurationManager configurationManager = new();
-                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../LibraryWebApp/"));
+                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../WebAPI/"));
                 configurationManager.AddJsonFile("appsettings.json");
                 return configurationManager.GetConnectionString("SqlServer");
             }
