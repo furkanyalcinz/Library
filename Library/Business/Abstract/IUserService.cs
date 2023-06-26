@@ -1,4 +1,5 @@
-﻿using Business.Schema.User;
+﻿using Business.ReturnTypes;
+using Business.Schema.User;
 using Entity.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-        public void Register(User user);
-        public void Login(LoginSchema loginSchema);
+        public IResult Register(User user);
+        public IResult Login(LoginSchema loginSchema);
     }
 }
