@@ -1,5 +1,6 @@
 ﻿using DataAccess.Context;
 using Entity.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace DataAccess.Abstract
         {
             _dbContext = dbContext;
         }
-
+        public DbSet<Entity> Table => _dbContext.Set<Entity>();
         public void Add(Entity entity)
         {
             _dbContext.Set<Entity>().Add(entity);
@@ -48,6 +49,16 @@ namespace DataAccess.Abstract
         {
             _dbContext.Set<Entity>().Update(entity);
             _dbContext.SaveChanges();
+        }
+        public IEnumerable<Entity> GetAllIncluding(params Expression<Func<Entity, object>>[] includeProperties)
+        {
+            IQueryable<Entity> query = _dbContext.Set<Entity>();
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return query.ToList();
         }
     }
 }

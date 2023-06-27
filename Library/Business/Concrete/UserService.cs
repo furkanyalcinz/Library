@@ -47,8 +47,8 @@ namespace Business.Concrete
                 Subject = new ClaimsIdentity(new[]
                 {
                 new Claim(ClaimTypes.Name, name),
-                new Claim(ClaimTypes.Email, email)
-                // Diğer talepleri buraya ekleyebilirsiniz.
+                new Claim(ClaimTypes.Email, email),
+                
             }),
                 Expires = DateTime.UtcNow.AddMinutes(Configuration.ExpirationMinutes),
                 Issuer = Configuration.Issurer,
@@ -59,6 +59,8 @@ namespace Business.Concrete
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        
 
         public IResult Login(LoginSchema loginSchema)
         {
@@ -106,6 +108,10 @@ namespace Business.Concrete
                 }
             }
             return new Result(false, "This email is used.");
+        }
+        public int GetUserIdByEmail(string email)
+        {
+            return userRepository.Table.Where(x=>x.Email == email).Select(x=> x.Id).First();
         }
     }
 }

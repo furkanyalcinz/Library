@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Entity.Concrete
 {
-    public class BorrowedBook:BaseEntity
+    public class Borrowed:BaseEntity
     {
         public int UserId { get; set; }
+        public string UserEmail { get; set; }
+        public string UserName { get; set; }
         public int BookId { get; set; }
-        public virtual User User { get; set; }
-        public virtual Book Book { get; set; }
+        public DateTime ReturnDate { get; set; }
     }
-
-    
 }

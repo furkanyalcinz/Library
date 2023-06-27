@@ -12,17 +12,16 @@ namespace DataAccess.Context
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<BorrowedBook> BorrowedBooks { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Borrowed> Borroweds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new BookConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+            
         }
     }
 }

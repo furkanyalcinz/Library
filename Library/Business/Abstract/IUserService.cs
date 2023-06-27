@@ -13,5 +13,6 @@ namespace Business.Abstract
     {
         public IResult Register(User user);
         public IResult Login(LoginSchema loginSchema);
+        public int GetUserIdByEmail(string email);
     }
 }
