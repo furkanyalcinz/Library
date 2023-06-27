@@ -3,6 +3,7 @@ using Business.Schema.User;
 using Entity.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Schema;
 
 namespace WebAPI.Controllers
 {
@@ -25,8 +26,13 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         [HttpPost("Register")]
-        public IActionResult Register([FromBody]User user)
+        public IActionResult Register([FromBody]UserRegisterView userView)
         {
+            var user = new User();
+            user.Surname = userView.Surname;
+            user.Email = userView.Email;
+            user.Name = userView.Name;
+            user.Password = userView.Password;
             var result = _userService.Register(user);
             return Ok(result);
         }

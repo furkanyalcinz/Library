@@ -1,4 +1,5 @@
 ﻿using Business.ReturnTypes;
+using Business.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Business.Abstract
     {
         public IResult GetAll();
         public IResult Reserve(int id, int userId, DateTime returnDate);
+        public Task<IResult> AddBook(AddBookView model);
     }
 }

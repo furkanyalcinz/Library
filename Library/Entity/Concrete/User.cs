@@ -1,4 +1,5 @@
 ﻿using Entity.Abstract;
+using Entity.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -16,6 +17,7 @@ namespace Entity.Concrete
         public string Email { get; set; }
         public string Password { get; set; }
         public bool IsActive { get; set; }=false;
+        public string Role { get; set; } = UserRoles.User.ToString();
     }
 
     public class UserConfiguration : IEntityTypeConfiguration<User>

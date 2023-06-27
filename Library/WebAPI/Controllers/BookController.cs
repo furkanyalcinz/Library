@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Schema;
+using Entity.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,14 +27,21 @@ namespace WebAPI.Controllers
             var result = _bookService.GetAll();
             return Ok(result);
         }
-        [HttpPost("Reserve <BookId>"), Authorize]
-        public IActionResult ReserveBook(int BookId, [FromBody] DateTime returnDate)
+        [HttpPost("Reserve"), Authorize]
+        public IActionResult ReserveBook([FromQuery]int BookId, [FromBody] DateTime returnDate)
         {
             var headers = Request.Headers.Authorization.ToString().Remove(0, 7);
             var res = JwtDecoder.JwtDecode(headers).Claims.ToList();
             var email = res[1].Value;
             var userId = _userService.GetUserIdByEmail(email);
             return Ok(_bookService.Reserve(BookId, userId, returnDate));
+        }
+        
+        [HttpPost("AddBook"), Authorize("AdminOnly")]
+        public IActionResult AddBook([FromForm]AddBookView model)
+        {
+            _bookService.AddBook(model);
+            return Ok();
         }
     }
 }

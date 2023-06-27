@@ -1,4 +1,5 @@
 using DataAccess;
+using Entity.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -34,6 +35,11 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
         ValidateAudience = false,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.SecretKey))
     };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole(UserRoles.Admin.ToString()));
 });
 var app = builder.Build();
 

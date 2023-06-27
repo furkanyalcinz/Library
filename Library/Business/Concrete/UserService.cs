@@ -41,13 +41,14 @@ namespace Business.Concrete
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Configuration.SecretKey);
-
+            var userRole = userRepository.Table.Where(x => x.Email == email).Select(x=> x.Role).First();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                 new Claim(ClaimTypes.Name, name),
                 new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Role, userRole)
                 
             }),
                 Expires = DateTime.UtcNow.AddMinutes(Configuration.ExpirationMinutes),
