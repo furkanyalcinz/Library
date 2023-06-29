@@ -15,7 +15,7 @@ namespace WebAPI.Extentions
             Services.AddDbContext<LibraryDbContext>();
             Services.AddScoped<IUserRepository, UserRepository>();
             Services.AddScoped<IBookRepository, BookRepository>();
-            Services.AddScoped<IBookPictureRepository, BookPictureRepository>();
+     
             Services.AddScoped<IBorrowedRepository, BorrowedRepository>();
             Services.AddScoped<IUserValidator, UserValidator>();
             Services.AddScoped<IUserService, UserService>();

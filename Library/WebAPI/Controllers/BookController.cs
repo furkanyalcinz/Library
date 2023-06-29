@@ -2,6 +2,7 @@
 using Business.Schema;
 using Entity.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Helpers;
@@ -9,6 +10,7 @@ using WebAPI.Helpers;
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors]
     [ApiController]
     public class BookController : ControllerBase
     {
@@ -21,7 +23,7 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet("GetAllBooks"), Authorize]
+        [HttpGet("GetAllBooks")]
         public IActionResult GetAllBooks()
         {
             var result = _bookService.GetAll();
@@ -42,6 +44,16 @@ namespace WebAPI.Controllers
         {
             _bookService.AddBook(model);
             return Ok();
+        }
+        [HttpGet("GetPicture")]
+        public IActionResult GetPictures([FromQuery]string imageName)
+        {
+            string imagePath = Directory.GetCurrentDirectory() + "/" + "Images" + "/" + imageName;
+            byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
+            string contentType = "image/jpeg";
+            var file = File(imageBytes, contentType);
+            file.FileDownloadName = imageName;
+            return Ok(file);
         }
     }
 }

@@ -12,6 +12,6 @@ namespace Business.Abstract
     {
         public IResult GetAll();
         public IResult Reserve(int id, int userId, DateTime returnDate);
-        public Task<IResult> AddBook(AddBookView model);
+        public IResult AddBook(AddBookView model);
     }
 }

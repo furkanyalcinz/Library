@@ -1,0 +1,72 @@
+﻿@using Client.Schemas;
+@using Newtonsoft.Json;
+@{
+    ViewData["Title"] = "Home Page";
+    var client = ViewBag.client;
+}
+
+
+@model List<Client.Schemas.Book>
+
+
+
+
+
+
+<div class="container justify-content-center align-content-center" style="display: flex;">
+    <div class="row">
+
+    @foreach (var book in Model)
+    {
+        HttpResponseMessage response = await client.GetAsync($"api/Book/GetPicture?imageName={book.PicturePath}");
+        var content = await response.Content.ReadAsStringAsync();
+        var res = JsonConvert.DeserializeObject<ImageView>(content);
+
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 " style="padding:10px;"> 
+        <div class="card" style="width: 18rem;">
+            <img src="data:image/jpeg;base64, @res.FileContents" class="card-img-top" alt="...">
+            <div class="card-body">
+                <div style="display: flex;" >
+                    <h5 class="card-title", style="padding-right:10px;">@book.Name</h5>
+                    <p>@book.AuthorName</p>
+                </div>
+                <div style="display:flex;">
+                    <b style="padding-right:10px">Publisher:</b>
+                    <p class="card-text">@book.Publisher</p>
+                </div>
+                <div style="display:flex;">
+                    <b style="padding-right:10px">Page Count:</b>
+                    <p class="card-text">@book.PageCount</p>
+                </div>
+                
+                @if(book.IsBorrowed == null || book.IsBorrowed == false)
+                {
+                    <a href="#" class="btn btn-primary">Borrow</a>
+                }
+                else
+                {
+                    <b>Book borrowed by:</b>
+                    <div style="display:flex;">
+                        <b style="padding-right:10px">User name:</b>
+                        <p>@book.Borrowed.UserName</p>
+                    </div>
+                    <div style="display:flex;">
+                        <b style="padding-right:10px">User Email:</b>
+                        <p>@book.Borrowed.UserEmail</p>
+                    </div>
+                    <div style="display:flex;">
+                        <b style="padding-right:10px">Return Date:</b>
+                        <p>@book.Borrowed.ReturnDate</p>
+                    </div>
+
+                    
+                    
+                    
+                }
+
+                    </div>
+        </div>
+     </div>
+    }
+</div>
+</div>

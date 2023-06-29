@@ -12,12 +12,14 @@ namespace Entity.Concrete
 {
     public class Book:BaseEntity
     {
+        
         public string Name { get; set; }
         public int PageCount { get; set; }
         public string Publisher { get; set; }
         public int CategoryId { get; set; }
         public string AuthorName { get; set; }
         public bool? IsBorrowed { get; set; }=false;
+        public string PicturePath { get; set; }
         public virtual Category Category { get; set; }
         public virtual Borrowed? Borrowed { get; set; }
     }

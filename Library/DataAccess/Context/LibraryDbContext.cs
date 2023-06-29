@@ -15,7 +15,7 @@ namespace DataAccess.Context
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Borrowed> Borroweds { get; set; }
-        public DbSet<BookPicture> BookPictures { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
