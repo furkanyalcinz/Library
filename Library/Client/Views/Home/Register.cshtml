@@ -1,0 +1,50 @@
+﻿@model Client.Schemas.Result
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var succesAlert = "<div class=\"alert alert-success\" role=\"alert\">success</div>";
+    var dangerAlert = "<div class=\"alert alert-danger\" role=\"alert\">danger</div>";
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div class="article" id="RegisterResponse">
+   
+   
+</div>
+
+
+
+<form id="registerForm">
+    <div class="mb-3">
+        <label for="nameInput" class="form-label">Name</label>
+        <input type="text" class="form-control" id="nameInput" />
+    </div>
+    <div class="mb-3">
+        <label for="surnameInput" class="form-label">Surname</label>
+        <input type="text" class="form-control" id="surnameInput" />
+    </div>
+    <div class="mb-3">
+        <label for="emailInput" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" />
+    </div>
+    <div class="mb-3">
+        <label for="InputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="InputPassword">
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+
+
+

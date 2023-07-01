@@ -79,7 +79,8 @@ namespace Business.Concrete
                 {
                     Token = token
                 };
-                return new DataResult<object>(true, null, response); 
+                var tokenData = new List<object> { response };
+                return new DataResult<List<object>>(true, null, tokenData); 
             }
             
         }

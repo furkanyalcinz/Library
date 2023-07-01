@@ -2,16 +2,12 @@
 @using Newtonsoft.Json;
 @{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var client = ViewBag.client;
 }
 
 
 @model List<Client.Schemas.Book>
-
-
-
-
-
 
 <div class="container justify-content-center align-content-center" style="display: flex;">
     <div class="row">
@@ -22,8 +18,8 @@
         var content = await response.Content.ReadAsStringAsync();
         var res = JsonConvert.DeserializeObject<ImageView>(content);
 
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 " style="padding:10px;"> 
-        <div class="card" style="width: 18rem;">
+     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 " style="padding:10px;">
+                <div class="card" style="width: 18rem;">
             <img src="data:image/jpeg;base64, @res.FileContents" class="card-img-top" alt="...">
             <div class="card-body">
                 <div style="display: flex;" >
@@ -41,7 +37,15 @@
                 
                 @if(book.IsBorrowed == null || book.IsBorrowed == false)
                 {
-                    <a href="#" class="btn btn-primary">Borrow</a>
+                            <div class="form-group">
+                                <label for="datepicker\@book.Id">Select a date:</label>
+
+                                <input type="text" id="datepicker\@book.Id" class="form-control" />
+                            </div>
+                            <div style="padding-right:10px;">
+                                
+                                <button id="btnBorrow" data-book-id="@book.Id">Borrow</button>
+                            </div>
                 }
                 else
                 {
@@ -57,14 +61,9 @@
                     <div style="display:flex;">
                         <b style="padding-right:10px">Return Date:</b>
                         <p>@book.Borrowed.ReturnDate</p>
-                    </div>
-
-                    
-                    
-                    
+                    </div>                     
                 }
-
-                    </div>
+            </div>
         </div>
      </div>
     }

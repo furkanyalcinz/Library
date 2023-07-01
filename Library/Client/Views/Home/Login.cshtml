@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="article" id="LoginResponse">
+</div>
+<form id="loginForm" method="post">
+
+    <div class="mb-3">
+        <label for="emailInput" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="emailInputLogin" aria-describedby="emailHelp" />
+    </div>
+    <div class="mb-3">
+        <label for="InputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="InputPasswordLogin">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
