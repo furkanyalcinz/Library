@@ -33,7 +33,7 @@ namespace Client.Controllers
             
             var result =  response.Content.ReadAsStringAsync().Result;
             var res = JsonConvert.DeserializeObject<Result<Book>>(result);
-            var data = res.Data;
+            var data = res.Data;   
             
             ViewBag.client = client;
             return View(data);
@@ -105,32 +105,24 @@ namespace Client.Controllers
             {
                 ViewBag.Success = res.Success;
 
-                return BadRequest(res);
+                return Ok(res);
             }
  
         }
 
         [HttpPost]
-        public async Task<IActionResult> Borrow(string bookId, string date)
+        public async Task<IActionResult> Borrow(string bookId, DateOnly date)
         {
-            DateTime returnDate = DateTime.Now;
+            if(date.ToString() == "01/01/0001")
+            {
+                return BadRequest("You should select a date");
+            }
             var client = new ApiHelper().Client();
-            if(date == null || date.IsNullOrEmpty())
+            if (date == null)
             {
                 return BadRequest("Add return date");
             }
-            else
-            {
-                try
-                {
-                   returnDate = DateTime.Parse(date);
-                }
-                catch (Exception)
-                {
-
-                    return BadRequest("Enter valid date");
-                }
-            }
+     
             string token = HttpContext.Session.GetString("Token");
             if(token == null)
             {
@@ -138,7 +130,7 @@ namespace Client.Controllers
             }
             client.DefaultRequestHeaders.Add("Authorization", "bearer "+token);
             string url = "api/Book/Reserve?BookId=" + bookId;
-            string jsonPayload = JsonConvert.SerializeObject(returnDate);
+            string jsonPayload = JsonConvert.SerializeObject(date);
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, content);
             return Ok();

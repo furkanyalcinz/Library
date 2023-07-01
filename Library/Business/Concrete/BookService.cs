@@ -23,10 +23,7 @@ namespace Business.Concrete
 
         public IResult GetAll()
         {
-            var books = _bookRepository.GetAllIQueryalbe().Include(b=>b.Category).Include(b=> b.Borrowed).ToList();
-
-            
-
+            var books = _bookRepository.GetAllIQueryalbe().Include(b=>b.Category).Include(b=> b.Borrowed).OrderBy(x=> x.Name).ToList();
             return new DataResult<List<Book>>(true,null,books);
         }
 
@@ -43,8 +40,10 @@ namespace Business.Concrete
                 borrowed.UserName = user.Name + " " + user.Surname;
                 borrowed.UserEmail = user.Email;
                 borrowed.BookId = book.Id;
+                borrowed.ReturnDate = returnDate;
                 _borrowedRepository.Add(borrowed);
                 book.IsBorrowed = true;
+                
                 
                 _bookRepository.Update(book);
                 return new Result(true, "Book reserved");
@@ -84,7 +83,7 @@ namespace Business.Concrete
                 pic.CopyTo(stream);
                 stream.Close();
             }
-            book.PicturePath = path;
+            book.PicturePath = fileName;
             _bookRepository.Add(book);
             
 

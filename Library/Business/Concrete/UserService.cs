@@ -69,7 +69,7 @@ namespace Business.Concrete
             var user = userRepository.Get(u => u.Email == loginSchema.Email & u.Password == hashedPassword);
             if (user == null)
             {
-                return new Result(false, "Email or password is wrond");
+                return new Result(false, "Email or password is wrong");
             }
             else
             {
@@ -100,13 +100,7 @@ namespace Business.Concrete
                 }
                 else
                 {
-                    List<string> errors = new List<string>(); // Initialize the errors list
-                    foreach (var err in isValid.Errors)
-                    {
-                        errors.Add(err.ErrorMessage);
-                    }
-                    return new DataResult<List<string>>(false, null, errors);
-
+                    return new Result(false, isValid.Errors[0].ErrorMessage);
                 }
             }
             return new Result(false, "This email is used.");

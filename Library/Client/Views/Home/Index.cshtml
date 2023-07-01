@@ -38,30 +38,35 @@
                 @if(book.IsBorrowed == null || book.IsBorrowed == false)
                 {
                             <div class="form-group">
-                                <label for="datepicker\@book.Id">Select a date:</label>
+                                <label for="datepicker_@book.Id">Select a date:</label>
 
-                                <input type="text" id="datepicker\@book.Id" class="form-control" />
+                                <input type="text" id="datepicker_@book.Id" class="form-control bg-gradient" />
                             </div>
-                            <div style="padding-right:10px;">
-                                
-                                <button id="btnBorrow" data-book-id="@book.Id">Borrow</button>
+                            <div style="padding-top:10px;">
+
+                                <button id="btnBorrow" data-book-id="@book.Id" class="btn btn-primary">Borrow</button>
                             </div>
                 }
                 else
                 {
-                    <b>Book borrowed by:</b>
-                    <div style="display:flex;">
-                        <b style="padding-right:10px">User name:</b>
-                        <p>@book.Borrowed.UserName</p>
+                    
+                    <div>
+                                <b>Book borrowed by:</b>
+                                <div style="display:flex;">
+                                    <b style="padding-right:10px">User name:</b>
+                                    <p>@book.Borrowed.UserName</p>
+                                </div>
+                                <div style="display:flex;">
+                                    <b style="padding-right:10px">User Email:</b>
+                                    <p>@book.Borrowed.UserEmail</p>
+                                </div>
+                                <div style="display:flex;">
+                                    <b style="padding-right:10px">Return Date:</b>
+
+                                    <p>@book.Borrowed.ReturnDate.Day/@book.Borrowed.ReturnDate.Month/@book.Borrowed.ReturnDate.Year</p>
+                                </div>
                     </div>
-                    <div style="display:flex;">
-                        <b style="padding-right:10px">User Email:</b>
-                        <p>@book.Borrowed.UserEmail</p>
-                    </div>
-                    <div style="display:flex;">
-                        <b style="padding-right:10px">Return Date:</b>
-                        <p>@book.Borrowed.ReturnDate</p>
-                    </div>                     
+                                       
                 }
             </div>
         </div>
