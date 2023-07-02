@@ -126,7 +126,7 @@ $(document).ready(function () {
                 date: returnDate
             },
             success: function (response) {
-
+                console.log(response);
                 alert("Success" + response);
                 location.reload()
             },

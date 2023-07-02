@@ -113,17 +113,23 @@ namespace Client.Controllers
         [HttpPost]
         public async Task<IActionResult> Borrow(string bookId, DateOnly date)
         {
-            if(date.ToString() == "01/01/0001")
+            
+            var client = new ApiHelper().Client();
+            string token = HttpContext.Session.GetString("Token");
+            if (token == null)
+            {
+                return BadRequest("You should login first");
+            }
+            if (date.ToString() == "01/01/0001")
             {
                 return BadRequest("You should select a date");
             }
-            var client = new ApiHelper().Client();
             if (date == null)
             {
                 return BadRequest("Add return date");
             }
      
-            string token = HttpContext.Session.GetString("Token");
+            
             if(token == null)
             {
                 return RedirectToAction("Login");

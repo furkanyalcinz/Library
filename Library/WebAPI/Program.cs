@@ -3,18 +3,27 @@ using Entity.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using WebAPI.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Log.Logger = new LoggerConfiguration()
+//    .WriteTo.File(Directory.GetCurrentDirectory().ToString() + "/Logs/Logs.txt", Serilog.Events.LogEventLevel.Information, flushToDiskInterval: TimeSpan.FromSeconds(10), shared: true)
+//    .CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Async(a => a.File("Logs/log.txt"))
+    .CreateLogger();
 // Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddServiceExtentions();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddLogging();
+builder.Host.UseSerilog();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -51,27 +60,41 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Information("Starting web api");
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    app.UseCors(b =>
+    {
+        b
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }
 
-app.UseCors(b =>
-{
-    b
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader();
-});
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
