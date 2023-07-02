@@ -1,6 +1,6 @@
 # Library
 Projede kullanılan teknolojiler:
-.Net Core Mvc, .Net Core Web API, JWT, Fluent Valiadation, N katmanlı mimari, Generic Repository Design Pattern, Html, Bootstrap, JQuery, Entity Framework Core, Sql Server.
+.Net Core Mvc, .Net Core Web API, JWT, Fluent Valiadation, Serilog, N katmanlı mimari, Generic Repository Design Pattern, Html, Bootstrap, JQuery, Entity Framework Core, Sql Server.
 
 Projeyi başlatmak için;
 Öncelikle SQL serverde Library adında bir database oluşturulmalı. Code First yaklaşım uygulandığından dolayı WebApi üzerinden DataAccess katmanına database migration yapılmalı bunun için;
